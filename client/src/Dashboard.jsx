@@ -12,8 +12,6 @@ const SpotifyApi = new SpotifyWebApi({
 
 export default function Dashboard({ code }) {
     const accessToken = useAuth(code)
-
-    localStorage.setItem('accessToken', accessToken)
     const [search, setSearch] = useState('')
     const [searchResults, setSearchResults] = useState([])
     const [playingTrack, setPlayingTrack] = useState()
@@ -50,7 +48,6 @@ export default function Dashboard({ code }) {
         
         SpotifyApi.searchTracks(search).then(res => {
             if (cancel) return 
-            console.log(res.body)
             setSearchResults(res.body.tracks.items.map(track => {
                 const smallestAlbumImage = track.album.images.reduce((smallest, image) => {
                     if (image.height < smallest.height) return image
